@@ -1,0 +1,356 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz@0,14..32;1,14..32&display=swap');
+
+:root{
+  --primary: #029AE0;
+  --primary-100: #073044;
+  --primary-200: #415A66;
+  --primary-300: #017CB3;
+  --primary-400: #50B6E6;
+  --background: #202124;
+  --background-100: #26282b;
+  --background-200: #3b3c3f;
+  --font-xs: 10px;
+  --font-sm: 12px;
+  --font-base: 14px;
+  --font-lg: 16px;
+  --font-xl: 18px;
+  --font-2xl: 20px;
+  --font-3xl: 22px;
+}
+
+*{
+font-family: 'Inter', sans-serif;
+margin: 0; 
+padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-areas: 'sidebar content';
+    height: 100vh;
+    background-color:var(--background);
+    color: white;
+    margin: 0 ;
+}
+ 
+
+/* General styles*/
+
+h2{
+    font-size: var(--font-3x1);
+}
+
+h3{
+    font-size: var(--font-2x1);
+}
+
+h4{
+    font-size: var(--font-x1);
+}
+
+h5{
+    font-size: var(--font-lg);
+}
+
+
+button{
+    padding: 8px 15px;
+    cursor: pointer;
+    height: 40px;
+    font-size: var(--font-base);
+    background-color: var(--primary );
+    color: white;
+    border-radius: 100px;
+    border: none;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+ /* Sidebar styles*/
+
+#sidebar {
+    background-color: var(--background-100 );
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+} 
+
+#company-logo {
+    height: 65px;
+    padding: 25px;
+  }
+
+#nav-buttons li {
+    list-style-type: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: var(--font-base);
+    cursor: pointer;
+    background-color: var(--primary);
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+#nav-buttons li:hover{
+    background-color: var(--primary-400);
+}
+
+/* Content styles*/
+
+#content {
+    background-color: var(--background-200); 
+}
+
+
+header {
+    padding: 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h2{
+    font-size: var(--font-2x1);
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+
+#import-projects-btn, #export-projects-btn {
+    cursor: pointer;
+}
+
+.card-header{
+    display: flex;
+    column-gap: 20px;
+    padding: 15px 20px;
+    align-items: center;
+    justify-content: start;
+    border-bottom: solid var(--background-200);
+    height: 100px;
+    }
+
+
+.card-content{
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
+}
+
+.card-properties{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}  
+
+#projects-list { /* to jest funkcja tworzenia Dashboarda jako grid */
+    display: grid;
+    /* auto-fill: dodaje tyle kolumn, ile się zmieści */
+    /* minmax(350px, 1fr): karta ma min. 280px, ale może urosnąć, by wypełnić lukę */
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)) !important; 
+    gap: 20px;
+    padding: 20px;
+    align-items: start; 
+}
+
+
+/* Form style */
+
+dialog {
+    background-color: transparent;
+    border: none;
+    margin: auto;
+}
+
+dialog::backdrop{
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+form {
+    width: 450px;
+    border-radius: 10px;
+    background-color:var(--background-100)
+}
+
+form h2 {
+    padding: 20px;
+    border-bottom: 2px solid var(--background);
+    color: white;
+}
+
+form .input-list {
+    display:flex;
+    flex-direction: column;
+    padding: 20px;
+    row-gap: 25px;
+}
+
+form .form-field-container {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+  font-size: var(--font-base);
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: rgba(150,150,150,1);
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+
+/* Standardowy wygląd pola */
+input, textarea, select {
+    color: #ffffff;
+    background-color: var(--background-200);
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: var(--font-base);
+}
+
+.tip{
+    font-size: 0.75rem;
+    color:  rgba(150,150,150,1);
+    font-style: italic;
+}
+
+
+/* Wygląd pola, gdy użytkownik w nie kliknie */
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--primary);
+}
+
+/*Project details page*/
+
+.dashboard-card {
+    background-color: var(--background-100);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#project-details > .main-page-content {
+    display: grid;
+    padding: 20px 40px;
+    gap: 30px;
+    grid-template-columns: 475px 1fr;
+    height: 100%;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    outline: 2px solid #969696;
+    width: 100px;
+    text-align: center;
+    grid-template-columns: none;
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary);
+    outline: none;
+}
+
+.todo-item {
+    padding: 20px;
+    background-color: var(--background-200);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.todo-item:hover {
+    background-color: var(--primary);
+}
+
+.user-main-info * { /* Gwiazdka oznacza "wszystko w środku" */
+    font-size: 14px;
+    margin: 0px;
+    font-weight: normal;
+
+}
+
+
+details[open] {
+    background-color:  #161616;
+ } 
+
+/* Linia oddzielająca widoczna tylko po otwarciu */
+
+
+details:hover {
+    background-color: #161616;
+}
+
+.user-card {
+    border-radius: 20px;
+    margin: 0px 45px 0px 45px ;
+}
+
+.user-details-content p {
+    margin-bottom: 12px;
+}
+
+#error-modal > div{
+    background-color: var(--background-100);
+    border-radius: 10px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+#error-modal h2 {
+    padding: 20px;
+    border-bottom: 2px solid var(--background);
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+#error-modal p {
+    color: #969696;
+    font-size: var(--font-base);
+}
+
+#error-modal span {
+    font-size: 48px;
+    color: #ff4444;
+}
+
+#error-modal button {
+    background-color: transparent;
+    outline: 2px solid #969696;
+    width: 30%;
+    grid-template-columns: none;
+    justify-content: center;
+}
+
+#error-modal button:hover {
+    background-color: var(--primary);
+    outline: none;
+}

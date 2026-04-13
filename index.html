@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <aside id="sidebar">
+        <img id="company-logo" src="./assets/company-logo.svg" alt="Construction company">
+        <ul id="nav-buttons">
+            <li id="nav-projects-btn"><span class="material-symbols-rounded">home_work</span>Projects</li>
+            <li><span class="material-symbols-rounded">supervisor_account</span>Users</li>
+        </ul>
+    </aside>
+    <main id="container"> 
+        <div id="project-page">
+            <dialog id="new-project-modal">
+                <form id="new-project-form">
+                    <h2>New Project</h2>
+                    <div class="input-list">
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">corporate_fare</span>Name</label>
+                            <input name="name" type="text" placeholder="What is name of your project?">
+                            <small class="tip">TIP: Give it a short name.</small>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">short_text</span>Description</label>
+                            <textarea name="description" cols="30" rows="5" placeholder="Describe your project." ></textarea>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">account_circle</span>Role</label>
+                            <select name="userRole">
+                                <option>Architect</option>
+                                <option>Engineer</option>
+                                <option>Developer</option>
+                            </select>
+                        </div>
+                        <div class="form-field-container">
+                            <label>Status</label>
+                            <select name="projectStatus" >
+                                <option>Active</option>
+                                <option>Pending</option>
+                                <option>Finished</option>
+                            </select>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">calendar_month</span>Date</label>
+                            <input name="finishDate" type="date" >
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content:space-around; padding-bottom: 20px;">
+                        <button id="cancel-btn" type="button" style="background-color: transparent;">Cancel</button>
+                        <button type="submit"  style="background-color: green;">Accpet</button>
+                    </div>
+                </form>
+            </dialog>
+            <dialog id="error-modal">
+                <div>
+                    <div style="text-align: center; padding: 1rem;">
+                        <div>
+                            <span class="material-symbols-rounded">error</span>
+                        </div>
+                    </div>
+                    <h2>Error</h2>
+                    <p id="error-message">A project with this name already exists.</p>
+                    <button id="error-close-btn" type="button">Cancel</button>
+                </div>
+            </dialog>
+            <header>
+                <h2>Projects</h2>
+                <div> 
+                    <span id="import-projects-btn" class="material-symbols-rounded">upload</span>
+                    <span id="export-projects-btn" class="material-symbols-rounded">download</span>
+                    <button id="new-project-btn"><span class="material-symbols-rounded">add_home_work</span>New Project</button>
+                </div>
+            </header>
+            <div id="projects-list">
+                <!-- <article class="project-card"> 
+                    <div class="card-header">
+                        <p style="background-color: #818CF8; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">HC</p>
+                        <div>
+                            <h5>Hospital Center</h5>
+                            <p style="font-size: 12px;">A 900,000 sq. ft. smart-medical facility featuring 636 private patient rooms and advanced automated clinical workflows.</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-properties">
+                            <p style="color: #969696;">Status</p>
+                            <P>Active</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Role</p>
+                            <P>Engineer</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Cost</p>
+                            <P>$2000000</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Estimated progress</p>
+                            <P>23%</P>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="card-header">
+                        <p style="background-color: #4ADE80; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">ST</p>
+                        <div>
+                            <h5>Skyline Tower</h5>
+                            <p style="font-size: 12px;">A 60-story mixed-use skyscraper incorporating sustainable "double-skin" glass facade technology and urban green zones.</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-properties">
+                            <p style="color: #969696;">Status</p>
+                            <P>Active</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Role</p>
+                            <P>Engineer</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Cost</p>
+                            <P>$20000000</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Estimated progress</p>
+                            <P>70%</P>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="card-header">
+                        <p style="background-color: #F472B6; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">LH</p>
+                        <div>
+                            <h5>Logistic Hub</h5>
+                            <p style="font-size: 12px;">A massive 10 million sq. ft. automated warehouse and production facility designed for next-gen electric vehicle manufacturing.</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-properties">
+                            <p style="color: #969696;">Status</p>
+                            <P>Active</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Role</p>
+                            <P>Engineer</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Cost</p>
+                            <P>$400000</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Estimated progress</p>
+                            <P>13%</P>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="card-header">
+                        <p style="background-color: #FB923C; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">PR</p>
+                        <div>
+                            <h5>Pacific Rail Link</h5>
+                            <p style="font-size: 12px;">An ambitious high-speed rail infrastructure project connecting major coastal hubs via 500 miles of electrified track.</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-properties">
+                            <p style="color: #969696;">Status</p>
+                            <P>Active</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Role</p>
+                            <P>Engineer</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Cost</p>
+                            <P>$800000</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Estimated progress</p>
+                            <P>43%</P>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="card-header">
+                        <p style="background-color: #2DD4BF; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">TC</p>
+                        <div>
+                            <h5>Tech Campus Zenith</h5>
+                            <p style="font-size: 12px;">A biophilic corporate headquarters featuring modular office pavilions and zero-emission geothermal heating systems.</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-properties">
+                            <p style="color: #969696;">Status</p>
+                            <P>Active</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Role</p>
+                            <P>Engineer</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Cost</p>
+                            <P>$70000</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Estimated progress</p>
+                            <P>83%</P>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="card-header">
+                        <p style="background-color: #FBBF24; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">IB</p>
+                        <div>
+                            <h5>Interstate Bridge</h5>
+                            <p style="font-size: 12px;">A critical 2.5-mile cable-stayed bridge replacement equipped with IoT sensors for structural health monitoring.</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-properties">
+                            <p style="color: #969696;">Status</p>
+                            <P>Active</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Role</p>
+                            <P>Engineer</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Cost</p>
+                            <P>$670000</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Estimated progress</p>
+                            <P>65%</P>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="card-header">
+                        <p style="background-color: #94A3B8; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">EC</p>
+                        <div>
+                            <h5>Eco-Industrial Park</h5>
+                            <p style="font-size: 12px;">A certified light-industrial district focused on circular economy principles and shared renewable energy resources.</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-properties">
+                            <p style="color: #969696;">Status</p>
+                            <P>Active</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Role</p>
+                            <P>Engineer</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Cost</p>
+                            <P>$568000</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Estimated progress</p>
+                            <P>91%</P>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <div class="card-header">
+                        <p style="background-color: #334155; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">DC</p>
+                        <div>
+                            <h5>Deep-Sea Port Exp.</h5>
+                            <p style="font-size: 12px;">Expansion of maritime terminal facilities including automated gantry cranes and reinforced corrosion-resistant docks.</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-properties">
+                            <p style="color: #969696;">Status</p>
+                            <P>Active</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Role</p>
+                            <P>Engineer</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Cost</p>
+                            <P>$200000</P>
+                        </div>
+                        <div class="card-properties">
+                            <p style="color: #969696;">Estimated progress</p>
+                            <P>5%</P>
+                        </div>
+                    </div>
+                </article>-->
+            </div>    
+        </div>
+        <div id="project-details" style="display: none;">
+            <header>
+                <div>
+                    <h2>Hospital Center</h2>
+                    <p style="color: #969696">Community hospital located at downtown</p>
+                </div>
+            </header>
+            <div class="main-page-content">
+                <div style="display: flex; flex-direction: column; row-gap: 30px;">
+                    <div class="dashboard-card" style="padding: 30px 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0px 30px; margin-bottom: 30px;">
+                            <p id="details-acronym" style="font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 12px;">HC</p>
+                            <button class="btn-secondary"><p style="width: 100%;">Edit</p></button>
+                        </div>
+                        <div style="padding: 0 30px;">
+                            <div>
+                                <p>Hospital Center</p>
+                                <p style="font-size: smaller; font-style: italic; color: #969696;">Community hospital located at downtown</p>
+                            </div>
+                            <div style="display: flex; column-gap: 30px; padding: 30px 0px; justify-content: space-between;">
+                                <div>
+                                    <p style="color: #969696; font-size: var(--font-sm)">Status</p>
+                                    <p>Active</p>
+                                </div>
+                                <div>
+                                    <p style="color: #969696; font-size: var(--font-sm)">Cost</p>
+                                    <p>$ 2'542.000</p>
+                                </div>
+                                <div>
+                                    <p style="color: #969696; font-size: var(--font-sm)">Role</p>
+                                    <p>Engineer</p>
+                                </div>
+                                <div>
+                                    <p style="color: #969696; font-size: var(--font-sm)">Finish Date</p>
+                                    <p>2023-05-01</p>
+                                </div>
+                            </div>
+                            <div style="background-color: #404040; border-radius: 9999px; overflow: auto;">
+                                <div style="width: 80%; background-color: green; padding: 4px 0; text-align: center;">80%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card" style="flex-grow: 1;">
+                        <div style="padding: 20px 30px; display: flex; align-items: center; justify-content: space-between;">
+                            <h4>To-Do</h4>
+                            <div style="display: flex; align-items: center; justify-content: end; column-gap: 20px;">
+                                <div style="display: flex; align-items: center; column-gap: 10px;">
+                                    <span class="material-icons-round">search</span>
+                                    <input type="text" placeholder="Search To-Do's by name" style="width: 100%;">
+                                </div>
+                                <span class="material-icons-round">add</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; padding: 10px 30px; row-gap: 20px;">
+                            <div class="todo-item">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; column-gap: 15px; align-items: center;">
+                                        <span class="material-icons-round" style="padding: 10px; background-color: #686868; border-radius: 10px;">construction</span>
+                                        <p>Make anything here as you want, even something longer.</p>
+                                    </div>
+                                    <p style="text-wrap: nowrap; margin-left: 10px;">Fri, 20 sep</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="viewer-container" class="dashboard-card"></div>
+            </div>
+        </div>
+        <div id="Users-details" style="display: none;">
+            <header>
+                <h2>Users</h2>
+                <div>
+                    <button><span class="material-symbols-rounded">add</span>New User</button>
+                </div>
+            </header>
+            <div style="display: flex; align-items: center; column-gap: 15px; padding: 30px 45px;">
+                <span class="material-symbols-rounded">search</span>
+                <input type="text" placeholder="Search by name" style="width: 20%;">
+            </div>
+            <div id="headers-user-list" style="margin: 20px 45px 0px 45px; border-top: 1px solid #333333;">
+                <div style="display: grid; grid-template-columns: 50px 2fr 1fr 1fr 2fr 50px; align-items: center; font-size: smaller; padding-top: 20px ;padding-bottom:20px; color: #969696;">
+                    <p>No.</p>
+                    <p>Name, Surname</p>
+                    <p>Role</p>
+                    <p>Assigned Project</p>
+                    <p>Status</p>
+                </div> 
+            </div>
+            <div id="user-list">
+                <details class="user-card">
+                    <summary style="list-style: none;"> 
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                                <span class="user-index">1</span>
+                                <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
+                                    <img src="assets/avatar1.png" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <h4 style="margin: 0;">John Smith</h4>
+                                </div>
+                                <h4>Architect</h4>
+                                <h4>Hospital Center</h4>
+                                <div style="display:flex; align-items: center; justify-content: center;border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                    <p>Active</p>
+                                </div>
+                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                        </div>   
+                    </summary>
+                    <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
+                    <div style="padding: 10px 45px 10px 45px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; color: #969696; font-size: 14px;" >
+                        <div class="user-details-content">
+                            <p>Phone: <span style="color: white;">+48 568239236</span></p>
+                            <p>Email: <span style="color: white;">john.smith@greenestdesign.pl</span></p>
+                            <p>Notes: <span style="color: white;">John is a main architect. Decision-maker.</span></p>
+                        </div>
+                        <div class="user-details-content">
+                            <p>Company Name: <span style="color: white;">Greenest Design</span></p>
+                            <p>Adress: <span style="color: white;">Piekna Street 9, Poznan, Poland</span></p>
+                        </div>
+                    </div>
+                </details>
+                 <details class="user-card">
+                    <summary style="list-style: none;"> 
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                                <span class="user-index">2</span>
+                                <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
+                                    <img src="assets\cute-smiling-young-man-with-bristle-looking-satisfied.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <h4 style="margin: 0;">Bob Black</h4>
+                                </div>
+                                <h4>Engineer</h4>
+                                <h4>Hospital Center</h4>
+                                <div style="display:flex; align-items: center; justify-content: center; border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                    <p>Active</p>
+                                </div>
+                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                        </div>   
+                    </summary>
+                    <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
+                    <div style="padding: 10px 45px 10px 45px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; color: #969696; font-size: 14px;" >
+                        <div class="user-details-content">
+                            <p>Phone: <span style="color: white;">+48 54623686</span></p>
+                            <p>Email: <span style="color: white;">bob.black@greenestdesign.pl</span></p>
+                            <p>Notes: <span style="color: white;">Bob is main engineer. Decision-maker.</span></p>
+                        </div>
+                        <div class="user-details-content">
+                            <p>Company Name: <span style="color: white;">Greenest Design</span></p>
+                            <p>Adress: <span style="color: white;">Piekna Street 9, Poznan, Poland</span></p>
+                        </div>
+                    </div>
+                </details>
+                 <details class="user-card">
+                    <summary style="list-style: none;"> 
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                                <span class="user-index">3</span>
+                                <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
+                                    <img src="assets\good-looking-caucasian-female-with-blonde-straight-hair-wearing-glasses-denim-shirt-smiles-happily-has-good-mood-after-successful-day-university-glad-pleased-pose.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <h4 style="margin: 0;">Anna Kowalska</h4>
+                                </div>
+                                <h4>BIM Specialist</h4>
+                                <h4>Hospital Center</h4>
+                                <div style="display:flex; align-items: center; justify-content: center; border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                    <p>Active</p>
+                                </div>
+                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                        </div>   
+                    </summary>
+                    <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
+                    <div style="padding: 10px 45px 10px 45px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; color: #969696; font-size: 14px;" >
+                        <div class="user-details-content">
+                            <p>Phone: <span style="color: white;">+48 568239236</span></p>
+                            <p>Email: <span style="color: white;">anna.kowalska@greenestdesign.pl</span></p>
+                            <p>Notes: <span style="color: white;">Anna is responsable for BIM model update.</span></p>
+                        </div>
+                        <div class="user-details-content">
+                            <p>Company Name: <span style="color: white;">Greenest Design</span></p>
+                            <p>Adress: <span style="color: white;">Piekna Street 9, Poznan, Poland</span></p>
+                        </div>
+                    </div>
+                </details>
+                 <details class="user-card">
+                    <summary style="list-style: none;"> 
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                                <span class="user-index">4</span>
+                                <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
+                                    <img src="assets\Zrzut ekranu 2026-03-20 180122.png" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <h4 style="margin: 0;">Lilianna Nowak</h4>
+                                </div>
+                                <h4>BIM Coordinator</h4>
+                                <h4>Hospital Center</h4>
+                                <div style="display:flex; align-items: center; justify-content: center; border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                    <p>Active</p>
+                                </div>
+                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                        </div>   
+                    </summary>
+                    <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
+                    <div style="padding: 10px 45px 10px 45px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; color: #969696; font-size: 14px;" >
+                        <div class="user-details-content">
+                            <p>Phone: <span style="color: white;">+48 568239236</span></p>
+                            <p>Email: <span style="color: white;">lilianna.nowak@greenestdesign.pl</span></p>
+                            <p>Notes: <span style="color: white;">Lilianna is responsable for the BIM model.</span></p>
+                        </div>
+                        <div class="user-details-content">
+                            <p>Company Name: <span style="color: white;">Greenest Design</span></p>
+                            <p>Adress: <span style="color: white;">Piekna Street 9, Poznan, Poland</span></p>
+                        </div>
+                    </div>
+                </details>
+                <details class="user-card">
+                    <summary style="list-style: none;"> 
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                                <span class="user-index">5</span>
+                                <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
+                                    <img src="assets\portrait-happy-man-with-dark-hair-smiles-with-white-teeth-looks-confident-camera-wears-round-transparent-glasses-black-t-shirt-poses-studio-against-white-background-positive-emotions.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <h4 style="margin: 0;">Thom White</h4>
+                                </div>
+                                <h4>Constration Manager</h4>
+                                <h4>Hospital Center</h4>
+                                <div style="display:flex; align-items: center; justify-content: center; border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                    <p>Active</p>
+                                </div>
+                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                        </div>   
+                    </summary>
+                    <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
+                    <div style="padding: 10px 45px 10px 45px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; color: #969696; font-size: 14px;" >
+                        <div class="user-details-content">
+                            <p>Phone: <span style="color: white;">+48 568239236</span></p>
+                            <p>Email: <span style="color: white;">thom.white@greenestdesign.pl</span></p>
+                            <p>Notes: <span style="color: white;">Thom is responsable for the construction-site.</span></p>
+                        </div>
+                        <div class="user-details-content">
+                            <p>Company Name: <span style="color: white;">Greenest Design</span></p>
+                            <p>Adress: <span style="color: white;">Piekna Street 9, Poznan, Poland</span></p>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            <dialog id="new-user-modal">
+                <form>
+                    <h2>New User</h2>
+                    <div class="input-list">
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">account_circle</span>Name, Surname</label>
+                            <input type="text" placeholder="Please provide a name and surname">
+                        </div>
+                        <div class="form-field-container">
+                            <label> <span class="material-symbols-rounded">co_present</span>Role</label>
+                            <select>
+                                <option>Architect</option>
+                                <option>Engineer</option>
+                                <option>Developer</option>
+                            </select>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">donut_large</span>Status</label>
+                            <select>
+                                <option>Active</option>
+                                <option>Pending</option>
+                                <option>Inactive</option>
+                            </select>
+                        </div>
+                        <div class="form-field-container">
+                            <label>Assigned project</label>
+                            <select>
+                                <option>Hospital Center</option>
+                                <option>Skyline Tower</option>
+                                <option>Logistic Hub</option>
+                                <option>Pacific Rail Link</option>
+                                <option>Interstate Bridge</option>
+                                <option>Eco-Industrial Park</option>
+                                <option>Deep-Sea Port Exp.</option>
+                            </select>
+
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">call</span>Phone</label>
+                            <input type="text" placeholder="Please provide your phone number">
+                        </div>
+                        <div class="form-field-container">
+                            <label>Notes</label>
+                            <input type="text" placeholder="Notes about the user">
+                            <small class="tip">TIP: Provide details about the user</small>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">mail</span>Email</label>
+                            <input type="text" placeholder="Please provide the user email">
+
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">location_on</span>Adress</label>
+                            <input type="text" placeholder="Please provide the user adress">
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">apartment</span>Company Name</label>
+                            <input type="text" placeholder="Please provide the company name of the user"></div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content:space-around; padding-bottom: 20px;">
+                        <button style="background-color: transparent;">Cancel</button>
+                        <button style="background-color: green;">Accpet</button>
+                    </div>
+                </form>
+            </dialog>  
+        </div>
+    </main>
+    <script type="module" src="./src/index.ts"></script>
+    <!-- wpisując type="module" // możesz dzielić kod na małe pliki i robić export-import js. -->
+</body>
+</html>
