@@ -40,6 +40,10 @@
                             </select>
                         </div>
                         <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">attach_money</span>Cost</label>
+                            <input type="text" name="cost" placeholder="e.g. 250000" inputmode="numeric" pattern="[0-9]*">
+                        </div>
+                        <div class="form-field-container">
                             <label>Status</label>
                             <select name="projectStatus" >
                                 <option>Active</option>
@@ -299,9 +303,9 @@
         </div>
         <div id="project-details" style="display: none;">
             <header>
-                <div>
-                    <h2>Hospital Center</h2>
-                    <p style="color: #969696">Community hospital located at downtown</p>
+                <div style="display: flex; flex-direction: column;"> 
+                    <h2 data-project-info="name">Hospital Center</h2>
+                    <p data-project-info="description" style="color: #969696; font-size: smaller; padding-top: 8px;">Community hospital located at downtown</p>
                 </div>
             </header>
             <div class="main-page-content">
@@ -313,25 +317,25 @@
                         </div>
                         <div style="padding: 0 30px;">
                             <div>
-                                <p>Hospital Center</p>
-                                <p style="font-size: smaller; font-style: italic; color: #969696;">Community hospital located at downtown</p>
+                                <p data-project-info="name">Hospital Center</p>
+                                <p data-project-info="cardDescription" style="font-size: smaller; font-style: italic; color: #969696;">Community hospital located at downtown</p>
                             </div>
                             <div style="display: flex; column-gap: 30px; padding: 30px 0px; justify-content: space-between;">
                                 <div>
                                     <p style="color: #969696; font-size: var(--font-sm)">Status</p>
-                                    <p>Active</p>
+                                    <p data-project-info="projectStatus">Active</p>
                                 </div>
                                 <div>
                                     <p style="color: #969696; font-size: var(--font-sm)">Cost</p>
-                                    <p>$ 2'542.000</p>
+                                    <p data-project-info="cost">$ 2'542.000</p>
                                 </div>
                                 <div>
                                     <p style="color: #969696; font-size: var(--font-sm)">Role</p>
-                                    <p>Engineer</p>
+                                    <p data-project-info="userRole">Engineer</p>
                                 </div>
                                 <div>
                                     <p style="color: #969696; font-size: var(--font-sm)">Finish Date</p>
-                                    <p>2023-05-01</p>
+                                    <p data-project-info="finishDate">2023-05-01</p>
                                 </div>
                             </div>
                             <div style="background-color: #404040; border-radius: 9999px; overflow: auto;">
