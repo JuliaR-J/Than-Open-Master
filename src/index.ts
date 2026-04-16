@@ -45,7 +45,8 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
             description: formData.get("description") as string,
             userRole: formData.get("userRole") as UserRole,
             projectStatus: formData.get("projectStatus") as ProjectStatus,
-            finishDate: new Date(formData.get("finishDate")  as string )
+            finishDate: new Date(formData.get("finishDate")  as string ),
+            cost: Number(formData.get("cost")) 
         }
 
         try{
@@ -84,7 +85,8 @@ projectsManager.newProject({
     description: "A 900,000 sq. ft. smart-medical facility featuring 636 private patient rooms.",
     userRole: "engineer",
     projectStatus: "pending",
-    finishDate: new Date("2025-01-01")
+    finishDate: new Date("2025-01-01"),
+    cost: 2542000
 })
 
 const exportProjectsBtn = document.getElementById("export-projects-btn")

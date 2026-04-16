@@ -126,6 +126,11 @@ header div {
     column-gap: 15px;
 }
 
+#project-details header div {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 #import-projects-btn, #export-projects-btn {
     cursor: pointer;
 }

@@ -11,6 +11,7 @@ export interface IProject {
     userRole: UserRole
     projectStatus: ProjectStatus
     finishDate: Date
+    cost: number 
 
 } //here we describe object datatyoes
 
@@ -22,10 +23,11 @@ export class Project implements IProject{ //implements means that class Project 
     userRole: "architect" | "engineer" | "developer"
     projectStatus: "pending" | "avtive" | "finished" // | means or
     finishDate: Date //here is an object template
+ 
 
     //Class internals
     ui!: HTMLElement
-    cost: number = 0
+    cost: number=0
     progress: number= 0
     id:string
 
@@ -42,6 +44,7 @@ export class Project implements IProject{ //implements means that class Project 
         this.userRole = data.userRole
         this.projectStatus = data.projectStatus
         this.finishDate = data.finishDate
+        this.cost = data.cost 
         this.id = uuidv4 ()
         this.setUI()
     }
