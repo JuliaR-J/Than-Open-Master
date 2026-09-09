@@ -30,6 +30,21 @@ export class Project implements IProject{ //implements means that class Project 
     cost: number=0
     progress: number= 0
     id:string
+    color: string = ""
+
+    //Random colors
+    private static colors = [
+    "#B8C4FF",
+    "#A8F0C6",
+    "#FFB3D9",
+    "#FFD4A8",
+    "#A8EDE8",
+    "#FFE8A8"
+]
+private static getRandomColor(): string {
+    const index = Math.floor(Math.random() * Project.colors.length)
+    return Project.colors[index]
+}
 
     constructor(data: IProject) {
         this.acronym = data.name
@@ -37,6 +52,7 @@ export class Project implements IProject{ //implements means that class Project 
         .map(word => word[0]) // takes the first letter of each word ["R", "B"]
         .join("")             // joins them into a single string "RB"
         .toUpperCase()        // converts to uppercase "RB"
+        .slice(0,2)
 
         
         this.name = data.name
@@ -49,35 +65,37 @@ export class Project implements IProject{ //implements means that class Project 
         this.setUI()
     }
   
-    // creates a project card UI fdfdsf
+    // creates a project card UI 
     setUI() {        //Project card UI
         if (this.ui) {return}
         this.ui = document.createElement("article")
         this.ui.className = "project-card"
+        const color = Project.getRandomColor()
+        this.color = color
         this.ui.innerHTML = `
-                    <div class="card-header">
-                        <p style="background-color: #4ADE80; padding: 10px; align-items: baseline; border-radius: 8px; aspect-ratio: 1;">${this.acronym}</p>
-                        <div>
-                            <h5>${this.name}</h5>
-                            <p style="font-size: 12px;">${this.description}</p>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-properties">
-                            <p style="color: #969696;">Status</p>
-                            <P>${this.projectStatus}</P>
-                        </div> 
-                        <div class="card-properties">
-                            <p style="color: #969696;">Role</p>
-                            <P>${this.userRole}</P>
-                        </div>
-                        <div class="card-properties">
-                            <p style="color: #969696;">Cost</p>
-                            <P>${this.cost}</P>
-                        </div>
-                        <div class="card-properties">
-                            <p style="color: #969696;">Estimated progress</p>
-                            <P>${this.progress * 100}%</P>
-                        </div>
-                    </div>`
+        <div class="card-header">
+            <div style="background-color:${color}; width: 48px; height: 48px; display: flex; font-size: 18px; font-weight: bold; justify-content: center; align-items: center; border-radius: 8px; flex-shrink: 0; line-height: 1">${this.acronym}</div>
+            <div>
+                <h5>${this.name}</h5>
+                <p style="font-size: 12px;">${this.description}</p>
+            </div>
+        </div>
+        <div class="card-content">
+            <div class="card-properties">
+                <p style="color: #969696;">Status</p>
+                <P>${this.projectStatus}</P>
+            </div> 
+            <div class="card-properties">
+                <p style="color: #969696;">Role</p>
+                <P>${this.userRole}</P>
+            </div>
+            <div class="card-properties">
+                <p style="color: #969696;">Cost</p>
+                <P>$ ${this.cost.toLocaleString("en-US")}</P>
+            </div>
+            <div class="card-properties">
+                <p style="color: #969696;">Estimated progress</p>
+                <P>${this.progress * 100}%</P>
+            </div>
+        </div>`
     }}

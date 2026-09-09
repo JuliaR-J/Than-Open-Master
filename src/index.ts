@@ -1,5 +1,4 @@
 
-import { isForInStatement } from "typescript"
 import{IProject, ProjectStatus, UserRole } from "./class/Project"
 import {ProjectsManager} from"./class/ProjectsManager"
 
@@ -55,6 +54,11 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
             closeModal("new-project-modal")
         } catch(error){
             const errorModal = document.getElementById("error-modal")
+            const errorMessage = document.getElementById("error-message")
+
+            if (errorMessage && error instanceof Error) {
+                errorMessage.textContent = error.message
+            }
            
             if(errorModal && errorModal instanceof HTMLDialogElement){
                 errorModal.showModal()

@@ -9,6 +9,9 @@ constructor (container: HTMLElement) {
 }
 
 newProject(data: IProject) {
+    if (data.name.length < 5) {
+        throw new Error(`Project name must be at least 5 characters long.`)
+    }
     const projectNames = this.list.map((project) => { //I want to not create a project if there is already a projcet with a given name. map is taking project names
         return project.name //it returns project names
     })
@@ -37,7 +40,8 @@ newProject(data: IProject) {
 private setDetailsPage(project:Project) {
     const detailsAcronym = document.getElementById("details-acronym")
     if (detailsAcronym) {
-    detailsAcronym.textContent = project.acronym}      
+    detailsAcronym.textContent = project.acronym
+    detailsAcronym.style.backgroundColor = project.color }      
 
     
     
