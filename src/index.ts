@@ -37,6 +37,9 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
     projectForm.addEventListener("submit", (e) => {
         e.preventDefault() // to powoduje, ze jak się kliknie na buttom formularz nie znika.
         const formData = new FormData(projectForm)
+
+        const defaultDate = new Date ()
+        defaultDate.setFullYear(defaultDate.getFullYear() + 1)
         
         const projectData:IProject = {
             acronym:formData.get("acronym") as string,
@@ -44,7 +47,7 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
             description: formData.get("description") as string,
             userRole: formData.get("userRole") as UserRole,
             projectStatus: formData.get("projectStatus") as ProjectStatus,
-            finishDate: new Date(formData.get("finishDate")  as string ),
+            finishDate: formData.get("finishDate") ? new Date(formData.get("finishDate") as string) : defaultDate,
             cost: Number(formData.get("cost")) 
         }
 
@@ -87,8 +90,8 @@ projectsManager.newProject({
     acronym: "HC",
     name: "Hospital Center",
     description: "A 900,000 sq. ft. smart-medical facility featuring 636 private patient rooms.",
-    userRole: "engineer",
-    projectStatus: "pending",
+    userRole: "Engineer",
+    projectStatus: "Pending",
     finishDate: new Date("2025-01-01"),
     cost: 2542000
 })

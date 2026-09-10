@@ -1,6 +1,6 @@
 import{v4 as uuidv4} from 'uuid'
-export type ProjectStatus = "pending" | "avtive" | "finished"  // | means or
-export type UserRole = "architect" | "engineer" | "developer"
+export type ProjectStatus = "Pending" | "Active" | "Finished"  // | means or
+export type UserRole = "Architect" | "Engineer" | "Developer"
 
 
 export interface IProject {
@@ -12,16 +12,25 @@ export interface IProject {
     projectStatus: ProjectStatus
     finishDate: Date
     cost: number 
+    color?: string
 
 } //here we describe object datatyoes
 
+export type TodoStatus = "active" | "done" | "in-progress"
+
+export interface ITodo {
+    name: string
+    type: string
+    date: Date
+    status: TodoStatus
+}
 
 export class Project implements IProject{ //implements means that class Project has to have (mandatory) prpoerties defined in the interface
     acronym: string
     name: string
     description: string
-    userRole: "architect" | "engineer" | "developer"
-    projectStatus: "pending" | "avtive" | "finished" // | means or
+    userRole: "Architect" | "Engineer" | "Developer"
+    projectStatus: "Pending" | "Active" | "Finished" // | means or
     finishDate: Date //here is an object template
  
 
@@ -31,6 +40,7 @@ export class Project implements IProject{ //implements means that class Project 
     progress: number= 0
     id:string
     color: string = ""
+    todoList: ITodo[] = []
 
     //Random colors
     private static colors = [
@@ -62,6 +72,7 @@ private static getRandomColor(): string {
         this.finishDate = data.finishDate
         this.cost = data.cost 
         this.id = uuidv4 ()
+        this.color = data.color || Project.getRandomColor()
         this.setUI()
     }
   
@@ -70,11 +81,9 @@ private static getRandomColor(): string {
         if (this.ui) {return}
         this.ui = document.createElement("article")
         this.ui.className = "project-card"
-        const color = Project.getRandomColor()
-        this.color = color
         this.ui.innerHTML = `
         <div class="card-header">
-            <div style="background-color:${color}; width: 48px; height: 48px; display: flex; font-size: 18px; font-weight: bold; justify-content: center; align-items: center; border-radius: 8px; flex-shrink: 0; line-height: 1">${this.acronym}</div>
+            <div style="background-color:${this.color}; width: 48px; height: 48px; display: flex; font-size: 18px; font-weight: bold; justify-content: center; align-items: center; border-radius: 8px; flex-shrink: 0; line-height: 1">${this.acronym}</div>
             <div>
                 <h5>${this.name}</h5>
                 <p style="font-size: 12px;">${this.description}</p>

@@ -1,4 +1,4 @@
-import {IProject, Project} from "./Project"
+import {IProject, Project, ITodo, UserRole, ProjectStatus} from "./Project"
 
 export class ProjectsManager {
 list: Project [] = [] //this means {} array of projects
@@ -44,7 +44,6 @@ private setDetailsPage(project:Project) {
     detailsAcronym.style.backgroundColor = project.color }      
 
     
-    
     const detailsPage = document.getElementById("project-details")
     if (!detailsPage) {return}
     const name = detailsPage.querySelector("[data-project-info='name']")
@@ -65,6 +64,126 @@ private setDetailsPage(project:Project) {
     if (role) { role.textContent = project.userRole }
     const finishDate = detailsPage.querySelector("[data-project-info='finishDate']")
     if (finishDate) { finishDate.textContent = project.finishDate.toDateString() }
+
+    const addTodoBtn = document.getElementById("add-todo-btn")
+    if (addTodoBtn) {
+        addTodoBtn.onclick = () => {
+            const modal = document.getElementById("new-todo-modal")
+            if (modal && modal instanceof HTMLDialogElement) {
+                modal.showModal()
+            }
+        }
+    }
+    const cancelTodoBtn = document.getElementById("cancel-todo-btn")
+    if (cancelTodoBtn) {
+        cancelTodoBtn.onclick = () => {
+            const modal = document.getElementById("new-todo-modal")
+            if (modal && modal instanceof HTMLDialogElement) {
+                modal.close()
+            }
+        }
+    }
+
+    const todoForm = document.getElementById("new-todo-form")
+    if (todoForm && todoForm instanceof HTMLFormElement) {
+        todoForm.onsubmit = (e) => {
+            e.preventDefault()
+            const formData = new FormData(todoForm)
+            
+            const todoData: ITodo = {
+                name: formData.get("todoName") as string,
+                type: formData.get("todoType") as string,
+                date: new Date(formData.get("todoDate") as string),
+                status: "active"
+            }
+
+            project.todoList.push(todoData)  // save to the project
+            this.updateTodoList(project)     // update UI
+            
+            console.log("New ToDo:", todoData)  // tymczasowo - żeby sprawdzić czy działa
+            
+            todoForm.reset()
+            const modal = document.getElementById("new-todo-modal")
+            if (modal && modal instanceof HTMLDialogElement) {
+                modal.close()
+            }
+        }
+    }
+
+    const editBtn = document.getElementById("edit-project-btn")
+    if (editBtn) {
+        editBtn.onclick = () => {
+            const modal = document.getElementById("edit-project-modal")
+            if (modal && modal instanceof HTMLDialogElement) {
+                const form = document.getElementById("edit-project-form") as HTMLFormElement
+                if (form) {
+                    (form.elements.namedItem("name") as HTMLInputElement).value = project.name;
+                    (form.elements.namedItem("description") as HTMLTextAreaElement).value = project.description;
+                    (form.elements.namedItem("userRole") as HTMLSelectElement).value = project.userRole;
+                    (form.elements.namedItem("projectStatus") as HTMLSelectElement).value = project.projectStatus;
+                    (form.elements.namedItem("cost") as HTMLInputElement).value = project.cost.toString();
+                    (form.elements.namedItem("finishDate") as HTMLInputElement).value = project.finishDate.toISOString().split("T")[0];
+                }
+                modal.showModal()
+            }
+        }
+    }
+
+    const cancelEditBtn = document.getElementById("cancel-edit-btn")
+    if (cancelEditBtn) {
+        cancelEditBtn.onclick = () => {
+            const modal = document.getElementById("edit-project-modal")
+            if (modal && modal instanceof HTMLDialogElement) {
+                modal.close()
+            }
+        }
+    }
+
+    const editForm = document.getElementById("edit-project-form")
+    if (editForm && editForm instanceof HTMLFormElement) {
+        editForm.onsubmit = (e) => {
+            e.preventDefault()
+            const formData = new FormData(editForm)
+            project.name = formData.get("name") as string
+            project.description = formData.get("description") as string
+            project.userRole = formData.get("userRole") as UserRole
+            project.projectStatus = formData.get("projectStatus") as ProjectStatus
+            project.finishDate = new Date(formData.get("finishDate") as string)
+            project.cost = Number(formData.get("cost"))
+            this.setDetailsPage(project)
+            const modal = document.getElementById("edit-project-modal")
+            if (modal && modal instanceof HTMLDialogElement) {
+                modal.close()
+            }
+        }
+    }
+}
+
+private updateTodoList(project: Project) {
+    const todoListUI = document.getElementById("todo-list")
+    if (!todoListUI) { return }
+    
+    todoListUI.innerHTML = ""
+    
+    for (const todo of project.todoList) {
+        const icon = todo.type === "Construction" ? "construction" : 
+                     todo.type === "Design" ? "design_services" :
+                     todo.type === "Review" ? "rate_review" :
+                     todo.type === "Meeting" ? "groups" : "task"
+
+        const todoItem = document.createElement("div")
+        todoItem.className = "todo-item"
+        todoItem.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; column-gap: 15px; align-items: center;">
+                    <span class="material-symbols-rounded" style="padding: 10px; background-color: #686868; border-radius: 10px;">${icon}</span>
+                    <p>${todo.name}</p>
+                </div>
+                <p style="text-wrap: nowrap; margin-left: 10px;">${todo.date.toDateString()}</p>
+            </div>
+        `
+        todoListUI.appendChild(todoItem)
+    }
 }
 
 getProject(id:string){

@@ -34,9 +34,9 @@
                         <div class="form-field-container">
                             <label><span class="material-symbols-rounded">account_circle</span>Role</label>
                             <select name="userRole">
-                                <option>Architect</option>
-                                <option>Engineer</option>
-                                <option>Developer</option>
+                                <option value="architect">Architect</option>
+                                <option value="engineer">Engineer</option>
+                                <option value="developer">Developer</option>
                             </select>
                         </div>
                         <div class="form-field-container">
@@ -302,6 +302,77 @@
             </div>    
         </div>
         <div id="project-details" style="display: none;">
+            <dialog id="new-todo-modal">
+                <form id="new-todo-form">
+                    <h2>New To-Do</h2>
+                    <div class="input-list">
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">category</span>Type</label>
+                            <select name="todoType">
+                                <option>Design</option>
+                                <option>Construction</option>
+                                <option>Review</option>
+                                <option>Meeting</option>
+                            </select>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">task</span>Task</label>
+                            <input name="todoName" type="text" placeholder="Describe the task">
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">calendar_month</span>End Date</label>
+                            <input name="todoDate" type="date">
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-around; padding-bottom: 20px;">
+                        <button id="cancel-todo-btn" type="button" style="background-color: transparent;">Cancel</button>
+                        <button type="submit" style="background-color: green;">Accept</button>
+                    </div>
+                </form>
+            </dialog>
+            <dialog id="edit-project-modal">
+                <form id="edit-project-form">
+                    <h2>Edit Project</h2>
+                    <div class="input-list">
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">corporate_fare</span>Name</label>
+                            <input name="name" type="text" placeholder="Project name">
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">short_text</span>Description</label>
+                            <textarea name="description" cols="30" rows="5"></textarea>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">account_circle</span>Role</label>
+                            <select name="userRole">
+                                <option value="Architect">Architect</option>
+                                <option value="Engineer">Engineer</option>
+                                <option value="Developer">Developer</option>
+                            </select>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">attach_money</span>Cost</label>
+                            <input type="text" name="cost" inputmode="numeric" pattern="[0-9]*">
+                        </div>
+                        <div class="form-field-container">
+                            <label>Status</label>
+                            <select name="projectStatus">
+                                <option value="Active">Active</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Finished">Finished</option>
+                            </select>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">calendar_month</span>Date</label>
+                            <input name="finishDate" type="date">
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-around; padding-top: 20px; padding-bottom: 20px;">
+                        <button id="cancel-edit-btn" type="button" style="background-color: transparent;">Cancel</button>
+                        <button type="submit" style="background-color: green; grid-template-columns: none; justify-content: center;">Save</button>
+                    </div>
+                </form>
+            </dialog>
             <header>
                 <div style="display: flex; flex-direction: column;"> 
                     <h2 data-project-info="name">Hospital Center</h2>
@@ -313,7 +384,7 @@
                     <div class="dashboard-card" style="padding: 30px 0;">
                         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0px 30px; margin-bottom: 30px;">
                             <p id="details-acronym" style="font-size: 20px; background-color: #ca8134; width: 48px; height: 48px; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">HC</p>
-                            <button class="btn-secondary"><p style="width: 100%;">Edit</p></button>
+                            <button id="edit-project-btn" class="btn-secondary"><p style="width: 100%;">Edit</p></button>
                         </div>
                         <div style="padding: 0 30px;">
                             <div>
@@ -348,14 +419,14 @@
                             <h4>To-Do</h4>
                             <div style="display: flex; align-items: center; justify-content: end; column-gap: 20px;">
                                 <div style="display: flex; align-items: center; column-gap: 10px;">
-                                    <span class="material-icons-round">search</span>
+                                    <span class="material-symbols-rounded">search</span>
                                     <input type="text" placeholder="Search To-Do's by name" style="width: 100%;">
                                 </div>
-                                <span class="material-icons-round">add</span>
+                                <span class="material-symbols-rounded" id="add-todo-btn" style="cursor: pointer;">add_circle</span>
                             </div>
                         </div>
-                        <div style="display: flex; flex-direction: column; padding: 10px 30px; row-gap: 20px;">
-                            <div class="todo-item">
+                        <div id="todo-list" style="display: flex; flex-direction: column; padding: 10px 30px; row-gap: 20px;">
+                            <!--<div class="todo-item">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div style="display: flex; column-gap: 15px; align-items: center;">
                                         <span class="material-icons-round" style="padding: 10px; background-color: #686868; border-radius: 10px;">construction</span>
@@ -363,7 +434,7 @@
                                     </div>
                                     <p style="text-wrap: nowrap; margin-left: 10px;">Fri, 20 sep</p>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

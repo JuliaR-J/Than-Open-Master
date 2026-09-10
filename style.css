@@ -178,6 +178,8 @@ dialog {
     background-color: transparent;
     border: none;
     margin: auto;
+    max-height: 90vh;
+    overflow: hidden;
 }
 
 dialog::backdrop{
@@ -188,7 +190,9 @@ dialog::backdrop{
 form {
     width: 450px;
     border-radius: 10px;
-    background-color:var(--background-100)
+    background-color:var(--background-100);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 form h2 {
@@ -358,4 +362,11 @@ details:hover {
 #error-modal button:hover {
     background-color: var(--primary);
     outline: none;
+}
+
+[data-project-info="projectStatus"],
+[data-project-info="userRole"],
+[data-project-info="cost"],
+[data-project-info="finishDate"] {
+    font-size: var(--font-base);
 }
