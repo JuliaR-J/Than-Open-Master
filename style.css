@@ -370,3 +370,24 @@ details:hover {
 [data-project-info="finishDate"] {
     font-size: var(--font-base);
 }
+
+#back-btn {
+    background-color: var(--background-200);
+    border: none;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#back-btn:hover {
+    background-color: var(--primary);
+}
+
+#project-details header {
+    padding: 20px 40px 0px 40px;
+}

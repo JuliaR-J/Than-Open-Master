@@ -127,3 +127,14 @@ if(importProjectsBtn) {
     } else{
         console.warn ("Nav projects button was not found.")
     }
+
+    const backBtn = document.getElementById("back-btn")
+    if (backBtn) {
+        backBtn.addEventListener("click", () => {
+            const projectPage = document.getElementById("project-page")
+            const detailsPage = document.getElementById("project-details")
+            if (!projectPage || !detailsPage) { return }
+            detailsPage.style.display = "none"
+            projectPage.style.display = "grid"
+        })
+    }
