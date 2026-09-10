@@ -284,13 +284,13 @@ input:focus, textarea:focus, select:focus {
 
 .todo-item {
     padding: 20px;
-    background-color: var(--background-200);
+/* usuń: background-color: var(--background-200); */
     border-radius: 10px;
     cursor: pointer;
 }
 
 .todo-item:hover {
-    background-color: var(--primary);
+    background-color: var(--background-200);
 }
 
 .user-main-info * { /* Gwiazdka oznacza "wszystko w środku" */

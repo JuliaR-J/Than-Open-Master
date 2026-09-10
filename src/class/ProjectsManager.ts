@@ -1,4 +1,4 @@
-import {IProject, Project, ITodo, UserRole, ProjectStatus} from "./Project"
+import {IProject, Project, ITodo, UserRole, ProjectStatus, TodoStatus} from "./Project"
 
 export class ProjectsManager {
 list: Project [] = [] //this means {} array of projects
@@ -94,13 +94,11 @@ private setDetailsPage(project:Project) {
                 name: formData.get("todoName") as string,
                 type: formData.get("todoType") as string,
                 date: new Date(formData.get("todoDate") as string),
-                status: "active"
+                status: formData.get("todoStatus") as TodoStatus
             }
 
             project.todoList.push(todoData)  // save to the project
             this.updateTodoList(project)     // update UI
-            
-            console.log("New ToDo:", todoData)  // tymczasowo - żeby sprawdzić czy działa
             
             todoForm.reset()
             const modal = document.getElementById("new-todo-modal")
@@ -171,18 +169,60 @@ private updateTodoList(project: Project) {
                      todo.type === "Review" ? "rate_review" :
                      todo.type === "Meeting" ? "groups" : "task"
 
+        const bgColor = todo.status === "to-do" ? "rgba(146, 64, 14, 0.4)" :
+                    todo.status === "in-progress" ? "rgba(6, 95, 70, 0.4)" :
+                    "rgba(55, 65, 81, 0.4)"
+
         const todoItem = document.createElement("div")
         todoItem.className = "todo-item"
+        todoItem.style.backgroundColor = bgColor
         todoItem.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex; column-gap: 15px; align-items: center;">
                     <span class="material-symbols-rounded" style="padding: 10px; background-color: #686868; border-radius: 10px;">${icon}</span>
                     <p>${todo.name}</p>
                 </div>
-                <p style="text-wrap: nowrap; margin-left: 10px;">${todo.date.toDateString()}</p>
+                <p style="text-wrap: nowrap; margin-left: 10px;">${new Date(todo.date).toDateString()}</p>
             </div>
         `
         todoListUI.appendChild(todoItem)
+        todoItem.addEventListener("click", () => {
+            console.log("Todo clicked!")  // ← dodaj tymczasowo
+            const modal = document.getElementById("edit-todo-modal")
+            console.log("Modal found:", modal)  // ← dodaj
+            if (modal && modal instanceof HTMLDialogElement) {
+                const form = document.getElementById("edit-todo-form") as HTMLFormElement
+                if (form) {
+                    (form.elements.namedItem("todoName") as HTMLInputElement).value = todo.name;
+                    (form.elements.namedItem("todoType") as HTMLSelectElement).value = todo.type;
+                    (form.elements.namedItem("todoStatus") as HTMLSelectElement).value = todo.status;
+                    const todoDate = new Date(todo.date)
+                    const dateValue = isNaN(todoDate.getTime()) ? "" : todoDate.toISOString().split("T")[0] 
+                    ;(form.elements.namedItem("todoDate") as HTMLInputElement).value = dateValue
+                }
+                modal.showModal()
+
+                const editTodoForm = document.getElementById("edit-todo-form")
+                if (editTodoForm && editTodoForm instanceof HTMLFormElement) {
+                    editTodoForm.onsubmit = (e) => {
+                        e.preventDefault()
+                        const formData = new FormData(editTodoForm)
+                        todo.name = formData.get("todoName") as string
+                        todo.type = formData.get("todoType") as string
+                        todo.status = formData.get("todoStatus") as TodoStatus
+                        todo.date = new Date(formData.get("todoDate") as string)
+                        this.updateTodoList(project)
+                        modal.close()
+                    }
+                }
+
+                const cancelEditTodoBtn = document.getElementById("cancel-edit-todo-btn")
+                if (cancelEditTodoBtn) {
+                    cancelEditTodoBtn.onclick = () => modal.close()
+                }
+            }
+        })
+
     }
 }
 
@@ -240,25 +280,49 @@ importFromJSON() {
     input.type = 'file'
     input.accept = 'application/json'
     const reader = new FileReader()
-    reader.addEventListener("load",() =>{
+    reader.addEventListener("load", () => {
         const json = reader.result
-        if (!json) {return}
+        if (!json) { return }
         const projects: IProject[] = JSON.parse(json as string)
         for (const project of projects) {
-            try {
-                this.newProject(project)
-            } catch (error) {
+            const existingProject = this.list.find(p => p.name === project.name)
+            if (existingProject) {
+                existingProject.description = project.description
+                existingProject.userRole = project.userRole
+                existingProject.projectStatus = project.projectStatus
+                existingProject.finishDate = new Date(project.finishDate)
+                existingProject.cost = project.cost
+                existingProject.todoList = project.todoList || []  
+                existingProject.ui.remove()
+                existingProject.ui = null as any
+                existingProject.setUI()
+                this.ui.append(existingProject.ui)
+                this.updateTodoList(existingProject) 
 
+                existingProject.ui.addEventListener("click", () => {
+                    const projectPage = document.getElementById("project-page")
+                    const detailsPage = document.getElementById("project-details")
+                    if (!projectPage || !detailsPage) { return }
+                    projectPage.style.display = "none"
+                    detailsPage.style.display = "grid"
+                    this.setDetailsPage(existingProject)
+                })
+
+            } else {
+                try {
+                    this.newProject(project)
+                } catch (error) {
+                    console.warn("Could not import project:", error)
+                }
             }
         }
     })
     input.addEventListener('change', () => {
         const filesList = input.files
-        if (!filesList) {return}
-        reader.readAsText (filesList[0])
+        if (!filesList) { return }
+        reader.readAsText(filesList[0])
     })
     input.click()
-
 }
 
 }

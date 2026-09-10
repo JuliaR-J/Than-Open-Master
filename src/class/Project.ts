@@ -13,10 +13,11 @@ export interface IProject {
     finishDate: Date
     cost: number 
     color?: string
+    todoList?: ITodo[]  
 
 } //here we describe object datatyoes
 
-export type TodoStatus = "active" | "done" | "in-progress"
+export type TodoStatus = "to-do" | "in-progress" | "done"
 
 export interface ITodo {
     name: string
@@ -44,12 +45,12 @@ export class Project implements IProject{ //implements means that class Project 
 
     //Random colors
     private static colors = [
-    "#B8C4FF",
-    "#A8F0C6",
-    "#FFB3D9",
-    "#FFD4A8",
-    "#A8EDE8",
-    "#FFE8A8"
+    "#3730A3",
+    "#065F46",
+    "#92400E",
+    "#1E3A5F",  
+    "#4C1D95", 
+    "#7F1D1D"
 ]
 private static getRandomColor(): string {
     const index = Math.floor(Math.random() * Project.colors.length)

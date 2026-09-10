@@ -17,6 +17,121 @@
         </ul>
     </aside>
     <main id="container"> 
+        <dialog id="new-todo-modal">
+                <form id="new-todo-form">
+                    <h2>New To-Do</h2>
+                    <div class="input-list">
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">category</span>Type</label>
+                            <select name="todoType">
+                                <option>Design</option>
+                                <option>Construction</option>
+                                <option>Review</option>
+                                <option>Meeting</option>
+                            </select>
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">task</span>Task</label>
+                            <input name="todoName" type="text" placeholder="Describe the task">
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">calendar_month</span>End Date</label>
+                            <input name="todoDate" type="date">
+                        </div>
+                        <div class="form-field-container">
+                            <label><span class="material-symbols-rounded">flag</span>Status</label>
+                            <select name="todoStatus">
+                                <option value="to-do">To Do</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="done">Done</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-around; padding-bottom: 20px;">
+                        <button id="cancel-todo-btn" type="button" style="background-color: transparent;">Cancel</button>
+                        <button type="submit" style="background-color: green;">Accept</button>
+                    </div>
+                </form>
+        </dialog>
+        <dialog id="edit-todo-modal">
+            <form id="edit-todo-form">
+                <h2>Edit To-Do</h2>
+                <div class="input-list">
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">category</span>Type</label>
+                        <select name="todoType">
+                            <option value="Design">Design</option>
+                            <option value="Construction">Construction</option>
+                            <option value="Review">Review</option>
+                            <option value="Meeting">Meeting</option>
+                        </select>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">task</span>Task</label>
+                        <input name="todoName" type="text" placeholder="Describe the task">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">calendar_month</span>End Date</label>
+                        <input name="todoDate" type="date">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">flag</span>Status</label>
+                        <select name="todoStatus">
+                            <option value="to-do">To Do</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="done">Done</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-around; padding-bottom: 20px;">
+                    <button id="cancel-edit-todo-btn" type="button" style="background-color: transparent;">Cancel</button>
+                    <button type="submit" style="background-color: green; grid-template-columns: none; justify-content: center;">Save</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="edit-project-modal">
+            <form id="edit-project-form">
+                <h2>Edit Project</h2>
+                <div class="input-list">
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">corporate_fare</span>Name</label>
+                        <input name="name" type="text" placeholder="Project name">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">short_text</span>Description</label>
+                        <textarea name="description" cols="30" rows="5"></textarea>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">account_circle</span>Role</label>
+                        <select name="userRole">
+                            <option value="Architect">Architect</option>
+                            <option value="Engineer">Engineer</option>
+                            <option value="Developer">Developer</option>
+                        </select>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">attach_money</span>Cost</label>
+                        <input type="text" name="cost" inputmode="numeric" pattern="[0-9]*">
+                    </div>
+                    <div class="form-field-container">
+                        <label>Status</label>
+                        <select name="projectStatus">
+                            <option value="Active">Active</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Finished">Finished</option>
+                        </select>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">calendar_month</span>Date</label>
+                        <input name="finishDate" type="date">
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-around; padding-top: 20px; padding-bottom: 20px;">
+                    <button id="cancel-edit-btn" type="button" style="background-color: transparent;">Cancel</button>
+                    <button type="submit" style="background-color: green; grid-template-columns: none; justify-content: center;">Save</button>
+                </div>
+            </form>
+        </dialog>
         <div id="project-page">
             <dialog id="new-project-modal">
                 <form id="new-project-form">
@@ -301,78 +416,7 @@
                 </article>-->
             </div>    
         </div>
-        <div id="project-details" style="display: none;">
-            <dialog id="new-todo-modal">
-                <form id="new-todo-form">
-                    <h2>New To-Do</h2>
-                    <div class="input-list">
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">category</span>Type</label>
-                            <select name="todoType">
-                                <option>Design</option>
-                                <option>Construction</option>
-                                <option>Review</option>
-                                <option>Meeting</option>
-                            </select>
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">task</span>Task</label>
-                            <input name="todoName" type="text" placeholder="Describe the task">
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">calendar_month</span>End Date</label>
-                            <input name="todoDate" type="date">
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; justify-content: space-around; padding-bottom: 20px;">
-                        <button id="cancel-todo-btn" type="button" style="background-color: transparent;">Cancel</button>
-                        <button type="submit" style="background-color: green;">Accept</button>
-                    </div>
-                </form>
-            </dialog>
-            <dialog id="edit-project-modal">
-                <form id="edit-project-form">
-                    <h2>Edit Project</h2>
-                    <div class="input-list">
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">corporate_fare</span>Name</label>
-                            <input name="name" type="text" placeholder="Project name">
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">short_text</span>Description</label>
-                            <textarea name="description" cols="30" rows="5"></textarea>
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">account_circle</span>Role</label>
-                            <select name="userRole">
-                                <option value="Architect">Architect</option>
-                                <option value="Engineer">Engineer</option>
-                                <option value="Developer">Developer</option>
-                            </select>
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">attach_money</span>Cost</label>
-                            <input type="text" name="cost" inputmode="numeric" pattern="[0-9]*">
-                        </div>
-                        <div class="form-field-container">
-                            <label>Status</label>
-                            <select name="projectStatus">
-                                <option value="Active">Active</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Finished">Finished</option>
-                            </select>
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">calendar_month</span>Date</label>
-                            <input name="finishDate" type="date">
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; justify-content: space-around; padding-top: 20px; padding-bottom: 20px;">
-                        <button id="cancel-edit-btn" type="button" style="background-color: transparent;">Cancel</button>
-                        <button type="submit" style="background-color: green; grid-template-columns: none; justify-content: center;">Save</button>
-                    </div>
-                </form>
-            </dialog>
+        <div id="project-details" style="display: none;">   
             <header>
                 <div style="display: flex; flex-direction: column; row-gap: 10px;">
                     <button id="back-btn" class="btn-secondary" style="grid-template-columns: none; justify-content: center; width: 40px; height: 40px; padding: 0; align-self: flex-start; margin-bottom: 20px;">
@@ -413,7 +457,7 @@
                                 </div>
                             </div>
                             <div style="background-color: #404040; border-radius: 9999px; overflow: auto;">
-                                <div style="width: 80%; background-color: green; padding: 4px 0; text-align: center;">80%</div>
+                                <div style="width: 80%; background-color: #029AE0 ; padding: 4px 0; text-align: center;">80%</div>
                             </div>
                         </div>
                     </div>
