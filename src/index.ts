@@ -249,7 +249,6 @@ if(importProjectsBtn) {
 
 
             const activeUserCard = document.querySelector(".user-card.editing")
-            console.log("activeUserCard:", activeUserCard) 
             if (activeUserCard) {
 
                 const photoFile = (editUserForm.querySelector("input[name='userPhoto']") as HTMLInputElement).files?.[0]
