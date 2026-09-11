@@ -13,7 +13,7 @@
         <img id="company-logo" src="./assets/company-logo.svg" alt="Construction company">
         <ul id="nav-buttons">
             <li id="nav-projects-btn"><span class="material-symbols-rounded">home_work</span>Projects</li>
-            <li><span class="material-symbols-rounded">supervisor_account</span>Users</li>
+            <li id="nav-users-btn"><span class="material-symbols-rounded">supervisor_account</span>Users</li>
         </ul>
     </aside>
     <main id="container"> 
@@ -132,6 +132,122 @@
                 </div>
             </form>
         </dialog>
+        <dialog id="edit-user-modal">
+            <form id="edit-user-form">
+                <h2>Edit User</h2>
+                <div class="input-list">
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">photo_camera</span>Photo</label>
+                        <input type="file" name="userPhoto" accept="image/*">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">person</span>Name</label>
+                        <input name="userName" type="text" placeholder="Name Surname">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">account_circle</span>Role</label>
+                        <input name="userRole" type="text" placeholder="Role">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">business</span>Assigned Project</label>
+                        <input name="assignedProject" type="text" placeholder="Project name">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">phone</span>Phone</label>
+                        <input name="phone" type="text" placeholder="+48 000000000">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">email</span>Email</label>
+                        <input name="email" type="email" placeholder="email@example.com">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">note</span>Notes</label>
+                        <textarea name="notes" cols="30" rows="3" placeholder="Notes about the user"></textarea>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">flag</span>Status</label>
+                        <select name="userStatus">
+                            <option value="Active">Active</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-around; padding: 20px;">
+                    <button id="cancel-edit-user-btn" type="button" style="background-color: transparent;">Cancel</button>
+                    <button type="submit" style="background-color: green; grid-template-columns: none; justify-content: center;">Save</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="new-user-modal">
+            <form id="new-user-form">
+                <h2>New User</h2>
+                <div class="input-list">
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">photo_camera</span>Photo</label>
+                        <input type="file" name="userPhoto" accept="image/*">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">account_circle</span>Name, Surname</label>
+                        <input name="userName" type="text" placeholder="Please provide a name and surname">
+                    </div>
+                    <div class="form-field-container">
+                        <label> <span class="material-symbols-rounded">co_present</span>Role</label>
+                        <select name="userRole">
+                            <option>Architect</option>
+                            <option>Engineer</option>
+                            <option>Developer</option>
+                        </select>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">donut_large</span>Status</label>
+                        <select name="userStatus">
+                            <option>Active</option>
+                            <option>Pending</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-field-container">
+                        <label>Assigned project</label>
+                        <select name="assignedProject">
+                            <option>Hospital Center</option>
+                            <option>Skyline Tower</option>
+                            <option>Logistic Hub</option>
+                            <option>Pacific Rail Link</option>
+                            <option>Interstate Bridge</option>
+                            <option>Eco-Industrial Park</option>
+                            <option>Deep-Sea Port Exp.</option>
+                        </select>
+
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">call</span>Phone</label>
+                        <input name="phone"  type="text" placeholder="Please provide your phone number">
+                    </div>
+                    <div class="form-field-container">
+                        <label>Notes</label>
+                        <input name="notes" type="text" placeholder="Notes about the user">
+                        <small class="tip">TIP: Provide details about the user</small>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">mail</span>Email</label>
+                        <input name="email" type="text" placeholder="Please provide the user email">
+
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">location_on</span>Adress</label>
+                        <input name="address" type="text" placeholder="Please provide the user adress">
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">apartment</span>Company Name</label>
+                        <input name="companyName" type="text" placeholder="Please provide the company name of the user"></div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content:space-around; padding-bottom: 20px;">
+                    <button  id="cancel-new-user-btn" type="button" style="background-color: transparent;">Cancel</button>
+                    <button type="submit"  style="background-color: green;">Accpet</button>
+                </div>
+            </form>
+        </dialog> 
         <div id="project-page">
             <dialog id="new-project-modal">
                 <form id="new-project-form">
@@ -492,12 +608,12 @@
             <header>
                 <h2>Users</h2>
                 <div>
-                    <button><span class="material-symbols-rounded">add</span>New User</button>
+                    <button id="new-user-btn"><span class="material-symbols-rounded">add</span>New User</button>
                 </div>
             </header>
             <div style="display: flex; align-items: center; column-gap: 15px; padding: 30px 45px;">
                 <span class="material-symbols-rounded">search</span>
-                <input type="text" placeholder="Search by name" style="width: 20%;">
+                <input type="text" id="search-user-input" placeholder="Search by name" style="width: 20%;">
             </div>
             <div id="headers-user-list" style="margin: 20px 45px 0px 45px; border-top: 1px solid #333333;">
                 <div style="display: grid; grid-template-columns: 50px 2fr 1fr 1fr 2fr 50px; align-items: center; font-size: smaller; padding-top: 20px ;padding-bottom:20px; color: #969696;">
@@ -509,20 +625,21 @@
                 </div> 
             </div>
             <div id="user-list">
-                <details class="user-card">
+                <details class="user-row user-card">
                     <summary style="list-style: none;"> 
-                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 2fr 1fr 1fr 1fr 50px 50px; align-items: center; padding: 20px 10px;">
                                 <span class="user-index">1</span>
                                 <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
-                                    <img src="assets/avatar1.png" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <img class="user-avatar" src="assets/avatar1.png" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
                                     <h4 style="margin: 0;">John Smith</h4>
                                 </div>
                                 <h4>Architect</h4>
                                 <h4>Hospital Center</h4>
-                                <div style="display:flex; align-items: center; justify-content: center;border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                <div class="status-btn" style="display:flex; align-items: center; justify-content: center; border-radius: 20px; background-color: green; width: 100px; padding: 8px;">
                                     <p>Active</p>
                                 </div>
-                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                                <span class="material-symbols-rounded edit-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px; margin-left: 10px;">edit_square</span>
+                                <span class="material-symbols-rounded delete-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px;">delete</span>
                         </div>   
                     </summary>
                     <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
@@ -538,20 +655,21 @@
                         </div>
                     </div>
                 </details>
-                 <details class="user-card">
+                <details class="user-row user-card">
                     <summary style="list-style: none;"> 
-                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 2fr 1fr 1fr 1fr 50px 50px; align-items: center; padding: 20px 10px;">
                                 <span class="user-index">2</span>
                                 <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
-                                    <img src="assets\cute-smiling-young-man-with-bristle-looking-satisfied.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <img class="user-avatar" src="assets/avatar2.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
                                     <h4 style="margin: 0;">Bob Black</h4>
                                 </div>
                                 <h4>Engineer</h4>
                                 <h4>Hospital Center</h4>
-                                <div style="display:flex; align-items: center; justify-content: center; border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                <div class="status-btn" style="display:flex; align-items: center; justify-content: center; border-radius: 20px; background-color: green; width: 100px; padding: 8px;">
                                     <p>Active</p>
                                 </div>
-                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                                <span class="material-symbols-rounded edit-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px; margin-left: 10px;">edit_square</span>
+                                <span class="material-symbols-rounded delete-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px;">delete</span>
                         </div>   
                     </summary>
                     <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
@@ -567,20 +685,21 @@
                         </div>
                     </div>
                 </details>
-                 <details class="user-card">
+                <details class="user-row user-card">
                     <summary style="list-style: none;"> 
-                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 2fr 1fr 1fr 1fr 50px 50px; align-items: center; padding: 20px 10px;">
                                 <span class="user-index">3</span>
                                 <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
-                                    <img src="assets\good-looking-caucasian-female-with-blonde-straight-hair-wearing-glasses-denim-shirt-smiles-happily-has-good-mood-after-successful-day-university-glad-pleased-pose.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <img class="user-avatar" src="assets/avatar3.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
                                     <h4 style="margin: 0;">Anna Kowalska</h4>
                                 </div>
                                 <h4>BIM Specialist</h4>
                                 <h4>Hospital Center</h4>
-                                <div style="display:flex; align-items: center; justify-content: center; border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                <div class="status-btn" style="display:flex; align-items: center; justify-content: center; border-radius: 20px; background-color: green; width: 100px; padding: 8px;">
                                     <p>Active</p>
                                 </div>
-                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                                <span class="material-symbols-rounded edit-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px; margin-left: 10px;">edit_square</span>
+                                <span class="material-symbols-rounded delete-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px;">delete</span>
                         </div>   
                     </summary>
                     <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
@@ -596,20 +715,21 @@
                         </div>
                     </div>
                 </details>
-                 <details class="user-card">
+                <details class="user-row user-card">
                     <summary style="list-style: none;"> 
-                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 2fr 1fr 1fr 1fr 50px 50px; align-items: center; padding: 20px 10px;">
                                 <span class="user-index">4</span>
                                 <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
-                                    <img src="assets\Zrzut ekranu 2026-03-20 180122.png" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <img class="user-avatar" src="assets/avatar5.png" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
                                     <h4 style="margin: 0;">Lilianna Nowak</h4>
                                 </div>
                                 <h4>BIM Coordinator</h4>
                                 <h4>Hospital Center</h4>
-                                <div style="display:flex; align-items: center; justify-content: center; border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                <div class="status-btn" style="display:flex; align-items: center; justify-content: center; border-radius: 20px; background-color: green; width: 100px; padding: 8px;">
                                     <p>Active</p>
                                 </div>
-                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                                <span class="material-symbols-rounded edit-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px; margin-left: 10px;">edit_square</span>
+                                <span class="material-symbols-rounded delete-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px;">delete</span>
                         </div>   
                     </summary>
                     <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
@@ -625,20 +745,21 @@
                         </div>
                     </div>
                 </details>
-                <details class="user-card">
+                <details class="user-row user-card">
                     <summary style="list-style: none;"> 
-                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px; align-items: center; padding: 20px 10px;">
+                            <div class="user-main-info" style="display: grid; grid-template-columns: 50px 2fr 1fr 1fr 1fr 50px 50px; align-items: center; padding: 20px 10px;">
                                 <span class="user-index">5</span>
                                 <div style="display: flex; column-gap: 8px; align-items: center; justify-content: flex-start;">
-                                    <img src="assets\portrait-happy-man-with-dark-hair-smiles-with-white-teeth-looks-confident-camera-wears-round-transparent-glasses-black-t-shirt-poses-studio-against-white-background-positive-emotions.jpg" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;">
+                                    <img class="user-avatar" src="assets/avatar4.jpg" style="width: 30px; height: 30px; border-radius: 50%;">
                                     <h4 style="margin: 0;">Thom White</h4>
                                 </div>
                                 <h4>Constration Manager</h4>
                                 <h4>Hospital Center</h4>
-                                <div style="display:flex; align-items: center; justify-content: center; border-radius: 20px;background-color: green; width: 100px; padding: 8px;">
+                                <div class="status-btn" style="display:flex; align-items: center; justify-content: center; border-radius: 20px; background-color: green; width: 100px; padding: 8px;">
                                     <p>Active</p>
                                 </div>
-                                <span class="material-symbols-rounded" style="cursor: pointer; color: #029AE0 ; font-size: 20px;" onclick="editUser(event, 1)">edit_square </span>
+                                <span class="material-symbols-rounded edit-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px; margin-left: 10px;">edit_square</span>
+                                <span class="material-symbols-rounded delete-user-btn" style="cursor: pointer; color: #029AE0; font-size: 20px;">delete</span>
                         </div>   
                     </summary>
                     <hr style="border: 1px solid ;color: #333333; margin:0px 20px;">
@@ -654,72 +775,7 @@
                         </div>
                     </div>
                 </details>
-            </div>
-            <dialog id="new-user-modal">
-                <form>
-                    <h2>New User</h2>
-                    <div class="input-list">
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">account_circle</span>Name, Surname</label>
-                            <input type="text" placeholder="Please provide a name and surname">
-                        </div>
-                        <div class="form-field-container">
-                            <label> <span class="material-symbols-rounded">co_present</span>Role</label>
-                            <select>
-                                <option>Architect</option>
-                                <option>Engineer</option>
-                                <option>Developer</option>
-                            </select>
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">donut_large</span>Status</label>
-                            <select>
-                                <option>Active</option>
-                                <option>Pending</option>
-                                <option>Inactive</option>
-                            </select>
-                        </div>
-                        <div class="form-field-container">
-                            <label>Assigned project</label>
-                            <select>
-                                <option>Hospital Center</option>
-                                <option>Skyline Tower</option>
-                                <option>Logistic Hub</option>
-                                <option>Pacific Rail Link</option>
-                                <option>Interstate Bridge</option>
-                                <option>Eco-Industrial Park</option>
-                                <option>Deep-Sea Port Exp.</option>
-                            </select>
-
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">call</span>Phone</label>
-                            <input type="text" placeholder="Please provide your phone number">
-                        </div>
-                        <div class="form-field-container">
-                            <label>Notes</label>
-                            <input type="text" placeholder="Notes about the user">
-                            <small class="tip">TIP: Provide details about the user</small>
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">mail</span>Email</label>
-                            <input type="text" placeholder="Please provide the user email">
-
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">location_on</span>Adress</label>
-                            <input type="text" placeholder="Please provide the user adress">
-                        </div>
-                        <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">apartment</span>Company Name</label>
-                            <input type="text" placeholder="Please provide the company name of the user"></div>
-                    </div>
-                    <div style="display: flex; align-items: center; justify-content:space-around; padding-bottom: 20px;">
-                        <button style="background-color: transparent;">Cancel</button>
-                        <button style="background-color: green;">Accpet</button>
-                    </div>
-                </form>
-            </dialog>  
+            </div> 
         </div>
     </main>
     <script type="module" src="./src/index.ts"></script>
