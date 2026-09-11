@@ -182,10 +182,21 @@ private updateTodoList(project: Project) {
                     <span class="material-symbols-rounded" style="padding: 10px; background-color: #686868; border-radius: 10px;">${icon}</span>
                     <p>${todo.name}</p>
                 </div>
-                <p style="text-wrap: nowrap; margin-left: 10px;">${new Date(todo.date).toDateString()}</p>
+                <div style="display: flex; align-items: center; column-gap: 10px;">
+                    <p style="text-wrap: nowrap;">${new Date(todo.date).toDateString()}</p>
+                    <span class="material-symbols-rounded delete-todo-btn" style="cursor: pointer;">delete</span>
+                </div>
             </div>
-        `
+            `
         todoListUI.appendChild(todoItem)
+        const deleteBtn = todoItem.querySelector(".delete-todo-btn")
+                if (deleteBtn) {
+                    deleteBtn.addEventListener("click", (e) => {
+                        e.stopPropagation()  // zapobiega otwarciu modalu edycji
+                        project.todoList = project.todoList.filter(t => t !== todo)
+                        this.updateTodoList(project)
+                    })
+                }
         todoItem.addEventListener("click", () => {
             console.log("Todo clicked!")  // ← dodaj tymczasowo
             const modal = document.getElementById("edit-todo-modal")
@@ -220,6 +231,7 @@ private updateTodoList(project: Project) {
                 if (cancelEditTodoBtn) {
                     cancelEditTodoBtn.onclick = () => modal.close()
                 }
+
             }
         })
 
