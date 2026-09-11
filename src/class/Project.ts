@@ -45,12 +45,16 @@ export class Project implements IProject{ //implements means that class Project 
 
     //Random colors
     private static colors = [
-    "#3730A3",
-    "#065F46",
-    "#92400E",
+    "#3730A3",  
+    "#065F46",  
+    "#92400E",  
     "#1E3A5F",  
     "#4C1D95", 
-    "#7F1D1D"
+    "#7F1D1D",  
+    "#134E4A",  
+    "#713F12",  
+    "#1E1B4B",  
+    "#4A1942"   
 ]
 private static getRandomColor(): string {
     const index = Math.floor(Math.random() * Project.colors.length)

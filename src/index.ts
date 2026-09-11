@@ -124,7 +124,7 @@ if(importProjectsBtn) {
         navProjectsBtn.addEventListener("click", () => {
             const projectPage = document.getElementById("project-page")
             const detailsPage = document.getElementById("project-details")
-            const usersPage = document.getElementById("users-page")
+            const usersPage = document.getElementById("Users-details")  // ← sprawdź nazwę
             if (!projectPage || !detailsPage) { return }
             detailsPage.style.display = "none"
             if (usersPage) { usersPage.style.display = "none" }
@@ -177,16 +177,16 @@ if(importProjectsBtn) {
     }
     
     const deleteUserBtns = document.querySelectorAll(".delete-user-btn")
-    deleteUserBtns.forEach(btn => {
-        btn.addEventListener("click", (e) => {
+    document.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement
+        if (target.classList.contains("delete-user-btn")) {
             e.stopPropagation()
-            const userCard = (e.target as HTMLElement).closest(".user-card")
+            const userCard = target.closest(".user-card")
             if (userCard) {
                 userCard.remove()
             }
-        })
+        }
     })
-
     
     const cancelEditUserBtn = document.getElementById("cancel-edit-user-btn")
     if (cancelEditUserBtn) {
@@ -331,8 +331,11 @@ if(importProjectsBtn) {
                             userStatus === "Pending" ? "#FB923C" : "#686868"
 
             const usersList = document.getElementById("user-list")
-            if (usersList) {
-                const userCount = usersList.querySelectorAll(".user-row.user-card").length + 1
+            if (!usersList) { return }
+
+            const userCount = usersList.querySelectorAll(".user-card").length + 1
+
+            const createUser = (photoSrc: string) => {
                 const newUser = document.createElement("details")
                 newUser.className = "user-row user-card"
                 newUser.innerHTML = `
@@ -340,9 +343,7 @@ if(importProjectsBtn) {
                         <div class="user-main-info" style="display: grid; grid-template-columns: 50px 2fr 1fr 1fr 1fr 50px 50px; align-items: center; padding: 20px 10px;">
                             <span class="user-index">${userCount}</span>
                             <div style="display: flex; column-gap: 8px; align-items: center;">
-                                <img class="user-avatar" src="" style="width: 30px; height: 30px; border-radius: 50%;">
-                                    ${userName.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2)}
-                                </img>
+                                <img class="user-avatar" src="${photoSrc}" style="width: 30px; height: 30px; border-radius: 50%;">
                                 <h4 style="margin: 0;">${userName}</h4>
                             </div>
                             <h4>${userRole}</h4>
@@ -368,22 +369,18 @@ if(importProjectsBtn) {
                     </div>
                 `
                 usersList.appendChild(newUser)
+            }
 
-                const photoFile = (document.querySelector("input[name='userPhoto']") as HTMLInputElement).files?.[0]
-                if (photoFile) {
-                    const reader = new FileReader()
-                    reader.onload = (event) => {
-                        const photoSrc = event.target?.result as string
-                        const avatarEl = newUser.querySelector(".user-avatar") as HTMLImageElement
-                        console.log("avatarEl:", avatarEl)
-                        console.log("photoSrc:", photoSrc ? "has data" : "empty") 
-                        if (avatarEl && photoSrc) {
-                            avatarEl.src = photoSrc
-                        }
-                    }
-                    reader.readAsDataURL(photoFile)
+            const photoFile = (newUserForm.querySelector("input[name='userPhoto']") as HTMLInputElement).files?.[0]
+            if (photoFile) {
+                const reader = new FileReader()
+                reader.onload = (event) => {
+                    const photoSrc = event.target?.result as string
+                    createUser(photoSrc)
                 }
-
+                reader.readAsDataURL(photoFile)
+            } else {
+                createUser("")
             }
 
             newUserForm.reset()
