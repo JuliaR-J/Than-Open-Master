@@ -1,4 +1,11 @@
+import * as THREE from "three"
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
+import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js"
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"
+import { MTLLoader} from "three/examples/jsm/loaders/MTLLoader.js" 
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import {IProject, Project, ITodo, UserRole, ProjectStatus, TodoStatus} from "./Project"
+
 
 export class ProjectsManager {
 list: Project [] = [] //this means {} array of projects
@@ -155,6 +162,175 @@ private setDetailsPage(project:Project) {
             }
         }
     }
+    //ThreeJS viewer
+    const viewerContainer = document.getElementById("viewer-container")
+    if (viewerContainer) {
+        viewerContainer.innerHTML = ""
+        
+        setTimeout(() => {
+            const scene = new THREE.Scene()
+            
+            const viewerContainer = document.getElementById("viewer-container") as HTMLElement
+            
+            const camera = new THREE.PerspectiveCamera(75)
+            camera.position.z = 5
+            
+            const renderer = new THREE.WebGLRenderer({alpha: true, antialias: true})
+            renderer.setPixelRatio(window.devicePixelRatio)
+            viewerContainer.append(renderer.domElement)
+
+            const controls = new OrbitControls(camera, renderer.domElement)
+            controls.enableDamping = true
+
+            function resizeViewer() {
+                const conteainerDimensions = viewerContainer.getBoundingClientRect()
+                renderer.setSize(conteainerDimensions.width, conteainerDimensions.height)
+                const aspectRatio = conteainerDimensions.width / conteainerDimensions.height
+                camera.aspect = aspectRatio
+                camera.updateProjectionMatrix()
+            }
+
+            window.addEventListener("resize", resizeViewer)
+            resizeViewer()
+            
+            
+            const boxGeometry = new THREE.BoxGeometry
+            const material = new THREE.MeshStandardMaterial({ color: 0x6699cc })
+            const cube = new THREE.Mesh(boxGeometry, material)
+            
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5)
+            directionalLight.position.set(3, 2
+                , 2) 
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.3)
+            const spotLight = new THREE.SpotLight(0xffffff, 100)
+
+            spotLight.position.set(4,6,4)
+            spotLight.angle = Math.PI/6
+            spotLight.penumbra = 0.3           
+            spotLight.distance = 25  
+            spotLight.decay = 2           
+
+            
+
+            const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1)
+            scene.add(directionalLightHelper)
+
+            const spotHelper = new THREE.SpotLightHelper(spotLight)
+
+            scene.add(cube, directionalLight, ambientLight, directionalLightHelper, spotLight, spotHelper)
+            
+             function animate() {
+                requestAnimationFrame(animate)
+                controls.update()
+                renderer.render(scene, camera)
+            }
+            animate()
+            
+            renderer.render(scene, camera)
+
+            const axes = new THREE.AxesHelper()
+            const grid = new THREE.GridHelper()
+            grid.material.transparent = true
+            grid.material.opacity = 0.4
+            grid.material.color = new THREE.Color ("#808080")
+
+            scene.add(axes, grid)
+
+            const gui = new GUI()
+            const cubeControls = gui.addFolder ("Cube")
+
+       
+            cubeControls.add(cube.position, "x", -10, 10, 1)
+            cubeControls.add(cube.position, "y", -10, 10, 1)
+            cubeControls.add(cube.position, "z", -10, 10, 1)
+            cubeControls.add(cube, "visible")
+            cubeControls.addColor(cube.material, "color")
+
+            
+           
+           /*const lightControls = gui.addFolder("Directional Light")
+
+            lightControls.add(directionalLight.position, "x", -10, 10, 0.1)
+            lightControls.add(directionalLight.position, "y", -10, 10, 0.1)
+            lightControls.add(directionalLight.position, "z", -10, 10, 0.1)
+
+            lightControls.add(directionalLight, "intensity", 0, 5, 0.1)
+            lightControls.addColor(directionalLight, "color")
+
+            lightControls.add(directionalLight, "visible")
+            lightControls.add(directionalLightHelper, "visible").name("Light Source")*/
+
+            //Sun rotation with azimuth and altitude
+            const sunParams = {
+            azimuth: 135,    
+            altitude: 45,    
+            distance: 5    
+            }
+
+            function updateSun() {
+            const az = THREE.MathUtils.degToRad(sunParams.azimuth)
+            const alt = THREE.MathUtils.degToRad(sunParams.altitude)
+            const r = sunParams.distance
+
+            directionalLight.position.set(
+                r * Math.cos(alt) * Math.sin(az),   
+                r * Math.sin(alt),                  
+                -r * Math.cos(alt) * Math.cos(az)   
+            )
+
+            directionalLightHelper.update()
+            }
+
+            updateSun()  
+
+            const sunFolder = gui.addFolder("Sun")
+            sunFolder.add(sunParams, "azimuth", 0, 360, 1).name("azimuth [°]").onChange(updateSun)
+            sunFolder.add(sunParams, "altitude", 0, 90, 1).name("altitude [°]").onChange(updateSun)
+            sunFolder.add(sunParams, "distance", 1, 20, 0.5).name("distance from helper").onChange(updateSun)
+
+
+          
+            const spotFolder = gui.addFolder("Spot Light")
+            spotFolder.add(spotLight, "intensity", 0, 500, 1)
+            spotFolder.add(spotLight, "angle", 0, Math.PI / 2, 0.01).onChange(() => spotHelper.update())
+            spotFolder.add(spotLight, "penumbra", 0, 1, 0.01)
+            spotFolder.add(spotLight, "distance", 0, 50, 1).onChange(() => spotHelper.update())
+            spotFolder.add(spotLight, "decay", 0, 2, 0.1)
+            spotFolder.addColor(spotLight, "color")
+
+            spotFolder.add(spotLight.position, "x", -20, 20, 0.1).name("position X").onChange(() => spotHelper.update())
+            spotFolder.add(spotLight.position, "y", 0, 20, 0.1).name("position Y").onChange(() => spotHelper.update())
+            spotFolder.add(spotLight.position, "z", -20, 20, 0.1).name("position Z").onChange(() => spotHelper.update())
+
+
+            const objLoader = new OBJLoader()
+            const mtlLoader = new MTLLoader()
+
+            //Load OBJ+MTL
+            /*mtlLoader.load("../assets/Gear/Gear1.mtl", (materials) => {
+                materials.preload()
+                objLoader.setMaterials (materials)
+            })
+
+            objLoader.load("../assets/Gear/Gear1.obj", (mesh) => {
+                scene.add(mesh)
+            })*/
+
+            //Load GLTF file
+            const gltfLoader = new GLTFLoader()
+
+            gltfLoader.load("/assets/gltf/gear_16.gltf", (gltf) => {
+            scene.add(gltf.scene)
+            })
+
+
+            
+
+            
+
+        }, 100)
+    }
 }
 
 private updateTodoList(project: Project) {
@@ -234,7 +410,21 @@ private updateTodoList(project: Project) {
 
             }
         })
-
+        const viewerContainer = document.getElementById("viewer-container")
+        if (viewerContainer) {
+            viewerContainer.innerHTML = ""
+            const scene = new THREE.Scene()
+            const renderer = new THREE.WebGLRenderer()
+            viewerContainer.append(renderer.domElement)
+            
+            setTimeout(() => {
+                const containerDimensions = viewerContainer.getBoundingClientRect()
+                const aspectRatio = containerDimensions.width / containerDimensions.height
+                const camera = new THREE.PerspectiveCamera(75, aspectRatio)
+                renderer.setSize(containerDimensions.width, containerDimensions.height)
+                renderer.render(scene, camera)
+            }, 100)
+        }
     }
 }
 
@@ -338,3 +528,4 @@ importFromJSON() {
 }
 
 }
+

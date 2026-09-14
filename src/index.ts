@@ -1,6 +1,7 @@
-
+import * as THREE from "three"
 import{IProject, ProjectStatus, UserRole } from "./class/Project"
 import {ProjectsManager} from"./class/ProjectsManager"
+
 
 declare global {
     interface Window {
@@ -389,3 +390,4 @@ if(importProjectsBtn) {
             }
         }
     }
+
