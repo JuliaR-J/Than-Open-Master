@@ -410,21 +410,6 @@ private updateTodoList(project: Project) {
 
             }
         })
-        const viewerContainer = document.getElementById("viewer-container")
-        if (viewerContainer) {
-            viewerContainer.innerHTML = ""
-            const scene = new THREE.Scene()
-            const renderer = new THREE.WebGLRenderer()
-            viewerContainer.append(renderer.domElement)
-            
-            setTimeout(() => {
-                const containerDimensions = viewerContainer.getBoundingClientRect()
-                const aspectRatio = containerDimensions.width / containerDimensions.height
-                const camera = new THREE.PerspectiveCamera(75, aspectRatio)
-                renderer.setSize(containerDimensions.width, containerDimensions.height)
-                renderer.render(scene, camera)
-            }, 100)
-        }
     }
 }
 

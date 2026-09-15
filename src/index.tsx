@@ -1,7 +1,15 @@
 import * as THREE from "three"
+import * as ReactDom from "react-dom/client"
+import { Sidebar } from "./react-components/Sidebar"
 import{IProject, ProjectStatus, UserRole } from "./class/Project"
 import {ProjectsManager} from"./class/ProjectsManager"
 
+
+const rootElement = document.getElementById("app") as HTMLDivElement
+const appRoot = ReactDom.createRoot(rootElement)
+appRoot.render(
+    <Sidebar />
+)
 
 declare global {
     interface Window {
